@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#174a76" />
+    <meta name="description" content="Explora cómo cambian los resultados de una inversión comercial al variar sus supuestos." />
+    <title>Business Scenario Planner · Escenarios comerciales</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script type="module" src="/src/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#assumptions">Ir a los supuestos</a>
+    <header class="app-header">
+      <a class="brand" href="/" aria-label="Business Scenario Planner, inicio">
+        <svg width="31" height="31" viewBox="0 0 31 31" fill="none" aria-hidden="true"><path d="M3 24H28M5 21V15M12 21V11M19 21V6M26 21V3" stroke="currentColor" stroke-width="3"/><path d="M3 7L8 3H15" stroke="currentColor" stroke-width="2"/></svg>
+        <span>Business Scenario <strong>Planner</strong></span>
+      </a>
+      <span class="local-status"><span aria-hidden="true"></span> Cuaderno local</span>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <h1 id="page-title">Explora antes de invertir.</h1>
+          <p>Cambia los supuestos y compara cuánto margen adicional podría generar tu inversión comercial.</p>
+        </div>
+        <nav class="jump-links" aria-label="Navegación del planificador"><a class="button-secondary" href="#results">Ver resultados</a><a class="text-link" href="#model-guide">Entender cálculos</a></nav>
+      </section>
+
+      <aside class="conditional-note">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 11V17M12 7V8" stroke="currentColor" stroke-width="2"/></svg>
+        <p><strong>Estos resultados dependen de tus supuestos.</strong> Los escenarios no tienen probabilidades asignadas. Una mayor inversión no genera más visitas automáticamente.</p>
+      </aside>
+
+      <section id="assumptions" class="workspace" aria-labelledby="assumptions-heading">
+        <div class="section-heading">
+          <div><h2 id="assumptions-heading">Supuestos de trabajo</h2><p>Una inversión al inicio. Un mismo flujo de nuevas ventas cada mes.</p></div>
+          <div class="section-actions"><button type="button" class="button-secondary" id="reset-button">Restaurar ejemplo</button></div>
+        </div>
+        <div id="restore-notice" class="restore-notice" hidden><p>Puedes recuperar los supuestos anteriores a la última restauración del ejemplo.</p><button type="button" class="button-secondary" id="undo-button">Deshacer restauración</button></div>
+        <div class="horizon-toolbar">
+          <div class="horizon-field"><label for="horizon">Horizonte común</label><div class="horizon-input"><input id="horizon" type="text" inputmode="numeric" maxlength="512" value="6" autocomplete="off" aria-describedby="horizon-help horizon-error"/><span>meses</span></div><span id="horizon-help">De 0 a 120 meses</span></div>
+          <p>Importes en euros, sin IVA.<br/>Datos de ejemplo; sustituye cada supuesto por el tuyo.</p>
+        </div>
+        <p id="horizon-error" class="field-error toolbar-error" hidden></p>
+        <div id="error-summary" class="error-summary" hidden aria-labelledby="error-summary-title"><h3 id="error-summary-title">Hay supuestos que revisar</h3><p>Selecciona un campo para corregirlo. Sus resultados se calcularán cuando sea válido.</p><ul id="error-list"></ul></div>
+        <div class="scenario-picker"><label for="scenario-picker">Escenario que quieres editar</label><select id="scenario-picker"><option value="initial">Situación inicial</option><option value="conservative">Conservador</option><option value="middle">Intermedio</option><option value="favorable">Favorable</option></select></div>
+        <p class="input-guidance" id="input-guidance">Decimales con coma o punto, sin separadores de miles. Por ejemplo: <strong>1500,50</strong>.</p>
+        <div class="table-scroll" role="region" aria-label="Supuestos editables de los cuatro escenarios" tabindex="0">
+          <table class="assumptions-table">
+            <caption class="sr-only">Supuestos de inversión y embudo comercial. Todas las columnas son editables.</caption>
+            <thead id="assumptions-head"></thead>
+            <tbody id="assumptions-body"></tbody>
+          </table>
+        </div>
+        <div class="assumptions-foot"><p>El margen por cliente ya descuenta costes variables y todavía no descuenta esta inversión. Las consultas son un supuesto manual.</p><a class="text-link" href="#results">Ver resultados</a></div>
+        <p id="save-status" class="save-status">Guardado automático en este navegador.</p>
+        <p id="storage-notice" class="storage-notice" role="status" aria-live="polite" hidden></p>
+      </section>
+
+      <div id="update-status" class="sr-only" role="status" aria-live="polite"></div>
+      <section id="results" tabindex="-1" aria-label="Resultados condicionados de los escenarios"></section>
+
+      <section id="model-guide" class="model-guide" aria-labelledby="guide-heading">
+        <div class="section-heading"><div><h2 id="guide-heading">Entiende el modelo</h2><p>Tres conceptos que conviene separar.</p></div><a href="/docs/MODELO.md" class="text-link" target="_blank" rel="noopener">Ver documentación completa <span aria-hidden="true">↗</span></a></div>
+        <div class="concept-grid">
+          <article><span class="concept-mark">€</span><h3>Facturación</h3><p>Lo que vendes antes de descontar costes. Más ventas no implican necesariamente más margen.</p><code>Clientes × facturación por cliente</code></article>
+          <article><span class="concept-mark">−</span><h3>Margen de contribución</h3><p>Lo que queda de las ventas tras sus costes variables. Aún faltan inversión comercial, costes fijos e impuestos.</p><code>Clientes × margen por cliente</code></article>
+          <article><span class="concept-mark">↔</span><h3>Recuperación adicional</h3><p>Cuándo el aumento de margen frente a la situación inicial compensa el desembolso adicional.</p><code>Inversión adicional / margen adicional al mes</code></article>
+        </div>
+        <details><summary>Fórmulas, unidades y lectura del ejemplo</summary><div class="details-content">
+          <p><strong>Clientes/mes = consultas/mes × cierre / 100.</strong> El cierre se escribe como porcentaje: 20 significa 20 %. Las visitas sirven para comprobar el embudo; las consultas son un supuesto independiente.</p>
+          <p><strong>Resultado adicional = (margen mensual del escenario − margen mensual inicial) × meses − (inversión del escenario − inversión inicial).</strong> El ROI incremental divide ese resultado entre la inversión adicional y lo multiplica por 100. Solo se calcula con inversión adicional positiva y no se anualiza.</p>
+          <p>En el ejemplo intermedio: 100 consultas × 20 % = 20 clientes/mes; 20 × 200 € = 4.000 € de facturación/mes; 20 × 80 € = 1.600 € de margen/mes. Frente a los 800 € de margen inicial, se generan 800 € adicionales al mes. En seis meses: 800 × 6 − 3.000 = <strong>1.800 € adicionales</strong>. Recuperación: 3.000 / 800 = <strong>3,75 meses</strong>; primer cierre mensual recuperado: mes 4.</p>
+          <p>Los clientes son valores esperados y pueden ser fraccionarios. Los cálculos mantienen toda su precisión; los importes y ratios se presentan redondeados. Con cero visitas y consultas, la tasa visita→consulta no aplica. Con horizonte cero, el desembolso inicial sí ocurre.</p>
+        </div></details>
+        <details><summary>Qué se está suponiendo y qué queda fuera</summary><div class="details-content">
+          <p>La inversión se realiza una sola vez en el mes 0. En la situación inicial debe representar inversión futura comparable, no un coste histórico. Los flujos mensuales se mantienen constantes y cada cliente nuevo realiza una primera venta.</p>
+          <p>La recuperación teórica supone margen uniforme durante el mes. La fecha de cobro puede ser distinta: este modelo no es una previsión de tesorería. Una recuperación fuera del horizonte exige mantener los supuestos más tiempo.</p>
+          <p>No se incluyen ventas recurrentes, estacionalidad, costes fijos, impuestos, financiación ni descuento temporal. El resultado tras inversión no es beneficio neto. Los nombres conservador, intermedio y favorable no reordenan los valores ni garantizan mejores resultados.</p>
+        </div></details>
+      </section>
+    </main>
+    <footer><span>Business Scenario Planner</span><p>Una herramienta para hacer explícitos tus supuestos.</p><span>Versión local 0.2</span></footer>
+    <noscript>Activa JavaScript para editar los supuestos y calcular los escenarios.</noscript>
+  </body>
+</html>
